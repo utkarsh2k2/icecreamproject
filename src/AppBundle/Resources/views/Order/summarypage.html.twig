@@ -1,0 +1,57 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block content %}       
+    <div class="container-fluid">
+
+        <div class="row">      
+            <div class="col-lg-offset-4 col-lg-4"><h3>Order&nbsp;Summary</h3></div>        
+        </div>    
+        <br>  
+        <br>  
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-2">Customer Name</div>
+            <div class="col-lg-2">{{ order.customername }}</div>
+        </div>
+        <br> 
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-2">Total Cost</div>
+            <div class="col-lg-2">Rs&nbsp;<b>{{ order.cost }}</b></div>
+        </div> 
+        <br> 
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-2">Icecreams</div>
+            <div class="col-lg-2">
+                {% for i,icecream in order.icecreamitems %}
+                    {% for flavour,id in flavourconstants %}
+                        {% if icecream.flavour == id %}
+                            {{ flavour }}&nbsp;-&nbsp;{{ icecream.numofscoops }}&nbsp;scoop(s){% if i+1 < order.icecreamitems|length %},{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+        <br>  
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-2">Toppings</div>
+            <div class="col-lg-2">
+                {% for i,topping in order.toppingitems %}
+                    {% for toppingname,id in toppingconstants %}
+                        {% if topping == id %}
+                            {{ toppingname }}{% if i+1 < order.toppingitems|length %},{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div> 
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-1">
+                <a href="{{ path('createorderpage') }}" class="btn btn-primary">New Order</a>
+            </div>    
+            <div class="col-lg-1">
+                <a href="{{ path('homepage') }}" class="btn btn-primary">Back to Home</a>
+            </div>    
+        </div>      
+    </div>    
+{% endblock %}   

@@ -1,0 +1,132 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Order;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * IcecreamItem
+ *
+ * @ORM\Table(name="icecreamitem")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\IcecreamItemRepository")
+ */
+class IcecreamItem {
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="flavour", type="string", length=255, nullable=true)
+     */
+    protected $flavour;
+
+    /**
+     * @var int
+     * @Assert\NotBlank(message="Number of scoops cannot be blank", groups={"createorder"})
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "You must add at least {{ limit }} scoop to order", groups={"createorder"}
+     * )
+     * @ORM\Column(name="numofscoops", type="integer", nullable=true)
+     */
+    protected $numofscoops;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="icecreamitems", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
+     */
+    protected $order;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set flavour
+     *
+     * @param string $flavour
+     *
+     * @return IcecreamItem
+     */
+    public function setFlavour($flavour)
+    {
+        $this->flavour = $flavour;
+
+        return $this;
+    }
+
+    /**
+     * Get flavour
+     *
+     * @return string
+     */
+    public function getFlavour()
+    {
+        return $this->flavour;
+    }
+
+    /**
+     * Set numofscoops
+     *
+     * @param integer $numofscoops
+     *
+     * @return IcecreamItem
+     */
+    public function setNumofscoops($numofscoops)
+    {
+        $this->numofscoops = $numofscoops;
+
+        return $this;
+    }
+
+    /**
+     * Get numofscoops
+     *
+     * @return integer
+     */
+    public function getNumofscoops()
+    {
+        return $this->numofscoops;
+    }
+
+    /**
+     * Set order
+     *
+     * @param \AppBundle\Entity\Order $order
+     *
+     * @return IcecreamItem
+     */
+    public function setOrder(\AppBundle\Entity\Order $order = null)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \AppBundle\Entity\Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+}

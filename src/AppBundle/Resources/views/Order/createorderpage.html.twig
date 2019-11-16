@@ -1,0 +1,51 @@
+{% extends '@App/layout.html.twig' %}
+
+{% form_theme form 'form/form-theme.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/order.css') }}">
+{% endblock %}
+
+{% block content %}  
+    <div class="container-fluid">
+        <h2>Create Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ path('homepage') }}" class="btn btn-primary">Back to Home</a>
+        </h2>
+        <br>
+        <br>
+    {{ form_start(form, {'method': 'post', 'action': path('createorderpage'), 'attr': {'class': 'createorderpage','novalidate': 'novalidate'}}) }}
+        <div class="row">
+            <div class="col-lg-2">{{form_label(form.customername)}}</div>
+            <div class="col-lg-2">{{form_widget(form.customername)}}</div>
+            <div class="col-lg-8 text-danger">{{form_errors(form.customername)}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-4 text-danger">{{form_errors(form)}}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">{{form_widget(form.icecreamitems)}}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-2">{{form_widget(form.toppingitems)}}</div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-2"><input type="submit" name="submit" value="Submit" class="btn btn-primary"></div>
+        </div>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}   
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/order.js') }}"></script> 
+{% endblock %}
